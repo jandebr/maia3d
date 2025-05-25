@@ -1,8 +1,7 @@
 package org.maia.graphics3d.render.gui;
 
 import javax.swing.Icon;
-
-import org.maia.graphics2d.image.ImageUtils;
+import javax.swing.ImageIcon;
 
 public class RenderUIResources {
 
@@ -177,7 +176,7 @@ public class RenderUIResources {
 	public static final Icon aboutLogoIcon = loadIcon(iconFolder + "3drenderer.png");
 
 	private static Icon loadIcon(String resourceName) {
-		return ImageUtils.getIcon(resourceName);
+		return new ImageIcon(RenderUIResources.class.getResource(resourceName));
 	}
 
 }

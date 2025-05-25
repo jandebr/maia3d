@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
+import org.maia.graphics2d.Metrics2D;
 import org.maia.graphics2d.geometry.Rectangle2D;
 import org.maia.graphics2d.image.ops.convolute.Convolution;
 import org.maia.graphics2d.image.ops.convolute.ConvolutionMatrix;
@@ -51,6 +52,7 @@ public class RaytraceRenderer extends BaseSceneRenderer {
 		if (state.shouldApplyDepthBlur()) {
 			applyDepthBlur(state, outputs);
 		}
+		System.out.println(Metrics2D.getInstance());
 		System.out.println(Metrics3D.getInstance());
 	}
 

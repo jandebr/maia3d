@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="export jar" name="Maia 3D">
-    <target name="export jar">
-        <jar destfile="${libraries.home}/maia3d/maia3d.jar">
-            <fileset dir="bin"/>
-            <fileset dir="resources"/>
-        </jar>
-    </target>
+	<target name="export jar">
+		<jar destfile="${libraries.home}/maia3d/maia3d.jar">
+			<fileset dir="bin" />
+			<fileset dir="resources">
+				<exclude name="icons/master/**" />
+			</fileset>
+		</jar>
+	</target>
 </project>

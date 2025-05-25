@@ -122,18 +122,16 @@ public class TransformMatrix {
 
 	@Override
 	public String toString() {
-		String open = "â”Œâ”‚â”‚â””";
-		String close = "â”�â”‚â”‚â”˜";
 		StringBuilder sb = new StringBuilder(256);
 		for (int i = 0; i < 4; i++) {
-			sb.append(open.charAt(i));
+			sb.append('[');
 			sb.append(' ');
 			for (int j = 0; j < 4; j++) {
 				double v = getValue(i, j);
 				sb.append(String.format("%10.3f", v));
 			}
 			sb.append(' ');
-			sb.append(close.charAt(i));
+			sb.append(']');
 			sb.append('\n');
 		}
 		return sb.toString();
