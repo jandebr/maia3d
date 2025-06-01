@@ -484,7 +484,7 @@ public class RaytraceRenderer extends BaseSceneRenderer {
 			if (getState().getOptions().isDepthDarknessEnabled()) {
 				DepthFunction df = getState().getScene().getDarknessDepthFunction();
 				if (df != null) {
-					double darkness = Math.max(Math.min(df.eval(depth), 1.0), 0);
+					float darkness = (float) Math.max(Math.min(df.eval(depth), 1.0), 0);
 					return ColorUtils.adjustBrightness(color, -darkness);
 				}
 			}

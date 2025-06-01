@@ -137,7 +137,7 @@ public class SimpleTexturedFace3D extends SimpleFace3D {
 	protected void applyLuminance(ObjectSurfacePoint3D surfacePoint, Scene scene) {
 		double luminance = sampleLuminance(surfacePoint, scene);
 		if (!Double.isNaN(luminance)) {
-			surfacePoint.setColor(ColorUtils.adjustBrightness(surfacePoint.getColor(), luminance));
+			surfacePoint.setColor(ColorUtils.adjustBrightness(surfacePoint.getColor(), (float) luminance));
 		}
 	}
 
@@ -155,7 +155,7 @@ public class SimpleTexturedFace3D extends SimpleFace3D {
 	protected void applyTransparency(ObjectSurfacePoint3D surfacePoint, Scene scene) {
 		double transparency = sampleTransparency(surfacePoint, scene);
 		if (!Double.isNaN(transparency)) {
-			surfacePoint.setColor(ColorUtils.setTransparency(surfacePoint.getColor(), transparency));
+			surfacePoint.setColor(ColorUtils.setTransparency(surfacePoint.getColor(), (float) transparency));
 		}
 	}
 

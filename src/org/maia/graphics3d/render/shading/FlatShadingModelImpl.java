@@ -59,7 +59,7 @@ public class FlatShadingModelImpl implements FlatShadingModel {
 	protected Color applyShading(Color surfaceColor, Point3D surfacePositionInCamera, PolygonalObject3D object,
 			Scene scene, RenderOptions options, ReusableObjectPack reusableObjects) {
 		double brightness = computeBrightnessFactor(surfacePositionInCamera, object, scene, options, reusableObjects);
-		return ColorUtils.adjustBrightness(surfaceColor, brightness);
+		return ColorUtils.adjustBrightness(surfaceColor, (float) brightness);
 	}
 
 	protected double computeBrightnessFactor(Point3D surfacePositionInCamera, PolygonalObject3D object, Scene scene,

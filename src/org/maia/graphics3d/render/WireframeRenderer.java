@@ -69,7 +69,7 @@ public class WireframeRenderer extends BaseSceneRenderer {
 			// Edge vertex lies outside view volume
 			return Color.RED;
 		} else {
-			return ColorUtils.interpolate(options.getWireframeColorNear(), options.getWireframeColorFar(), r);
+			return ColorUtils.interpolate(options.getWireframeColorNear(), options.getWireframeColorFar(), (float) r);
 		}
 	}
 
