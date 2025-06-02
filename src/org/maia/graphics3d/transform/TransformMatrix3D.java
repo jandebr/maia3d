@@ -19,15 +19,15 @@ import org.maia.graphics3d.geometry.Point3D;
  * <code>TransformMatrixBuilder</code>
  * </p>
  * 
- * @see TransformMatrixBuilder
+ * @see TransformMatrixBuilder3D
  */
-public class TransformMatrix {
+public class TransformMatrix3D {
 
 	private double[] values;
 
-	private TransformMatrix inverseMatrix;
+	private TransformMatrix3D inverseMatrix;
 
-	public TransformMatrix(double[] values) {
+	public TransformMatrix3D(double[] values) {
 		if (values == null || values.length != 16)
 			throw new IllegalArgumentException("The matrix should have 16 values as its dimensions are 4 by 4");
 		this.values = values;
@@ -42,7 +42,7 @@ public class TransformMatrix {
 	 *         <code>T</code> * <code>M</code> , where <code>T</code> denotes <code>this</code> and <code>M</code>
 	 *         denotes <code>matrix</code>
 	 */
-	public TransformMatrix preMultiply(TransformMatrix matrix) {
+	public TransformMatrix3D preMultiply(TransformMatrix3D matrix) {
 		Metrics3D.getInstance().incrementMatrixMultiplications();
 		double[] T = getValues();
 		double[] M = matrix.getValues();
@@ -68,7 +68,7 @@ public class TransformMatrix {
 		R[13] = T[12] * M[1] + T[13] * M[5] + T[14] * M[9] + T[15] * M[13];
 		R[14] = T[12] * M[2] + T[13] * M[6] + T[14] * M[10] + T[15] * M[14];
 		R[15] = T[12] * M[3] + T[13] * M[7] + T[14] * M[11] + T[15] * M[15];
-		return new TransformMatrix(R);
+		return new TransformMatrix3D(R);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class TransformMatrix {
 	 *         <code>M</code> * <code>T</code> , where <code>T</code> denotes <code>this</code> and <code>M</code>
 	 *         denotes <code>matrix</code>
 	 */
-	public TransformMatrix postMultiply(TransformMatrix matrix) {
+	public TransformMatrix3D postMultiply(TransformMatrix3D matrix) {
 		return matrix.preMultiply(this);
 	}
 
@@ -145,11 +145,11 @@ public class TransformMatrix {
 		return values;
 	}
 
-	TransformMatrix getInverseMatrix() {
+	TransformMatrix3D getInverseMatrix() {
 		return inverseMatrix;
 	}
 
-	void setInverseMatrix(TransformMatrix inverseMatrix) {
+	void setInverseMatrix(TransformMatrix3D inverseMatrix) {
 		this.inverseMatrix = inverseMatrix;
 	}
 

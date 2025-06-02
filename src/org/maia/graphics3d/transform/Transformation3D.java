@@ -5,24 +5,24 @@ import org.maia.graphics3d.geometry.Point3D;
 import org.maia.graphics3d.geometry.Vector3D;
 import org.maia.graphics3d.model.OrthographicProjection;
 
-public class Transformation {
+public class Transformation3D {
 
-	private static TransformMatrix IDENTITY_MATRIX;
+	private static TransformMatrix3D IDENTITY_MATRIX;
 
-	private Transformation() {
+	private Transformation3D() {
 	}
 
-	public static TransformMatrix getIdentityMatrix() {
+	public static TransformMatrix3D getIdentityMatrix() {
 		if (IDENTITY_MATRIX == null) {
-			TransformMatrix I = createIdentityMatrix();
+			TransformMatrix3D I = createIdentityMatrix();
 			I.setInverseMatrix(I);
 			IDENTITY_MATRIX = I;
 		}
 		return IDENTITY_MATRIX;
 	}
 
-	private static TransformMatrix createIdentityMatrix() {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	private static TransformMatrix3D createIdentityMatrix() {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 1.0);
 		builder.setValue(1, 1, 1.0);
 		builder.setValue(2, 2, 1.0);
@@ -30,16 +30,16 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getTranslationMatrix(double dx, double dy, double dz) {
-		TransformMatrix M = createTranslationMatrix(dx, dy, dz);
-		TransformMatrix I = createTranslationMatrix(-dx, -dy, -dz);
+	public static TransformMatrix3D getTranslationMatrix(double dx, double dy, double dz) {
+		TransformMatrix3D M = createTranslationMatrix(dx, dy, dz);
+		TransformMatrix3D I = createTranslationMatrix(-dx, -dy, -dz);
 		M.setInverseMatrix(I);
 		I.setInverseMatrix(M);
 		return M;
 	}
 
-	private static TransformMatrix createTranslationMatrix(double dx, double dy, double dz) {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	private static TransformMatrix3D createTranslationMatrix(double dx, double dy, double dz) {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 1.0);
 		builder.setValue(0, 3, dx);
 		builder.setValue(1, 1, 1.0);
@@ -50,16 +50,16 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getScalingMatrix(double sx, double sy, double sz) {
-		TransformMatrix M = createScalingMatrix(sx, sy, sz);
-		TransformMatrix I = createScalingMatrix(1.0 / sx, 1.0 / sy, 1.0 / sz);
+	public static TransformMatrix3D getScalingMatrix(double sx, double sy, double sz) {
+		TransformMatrix3D M = createScalingMatrix(sx, sy, sz);
+		TransformMatrix3D I = createScalingMatrix(1.0 / sx, 1.0 / sy, 1.0 / sz);
 		M.setInverseMatrix(I);
 		I.setInverseMatrix(M);
 		return M;
 	}
 
-	private static TransformMatrix createScalingMatrix(double sx, double sy, double sz) {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	private static TransformMatrix3D createScalingMatrix(double sx, double sy, double sz) {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, sx);
 		builder.setValue(1, 1, sy);
 		builder.setValue(2, 2, sz);
@@ -67,18 +67,18 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getRotationXrollMatrix(double angleInRadians) {
-		TransformMatrix M = createRotationXrollMatrix(angleInRadians);
-		TransformMatrix I = createRotationXrollMatrix(-angleInRadians);
+	public static TransformMatrix3D getRotationXrollMatrix(double angleInRadians) {
+		TransformMatrix3D M = createRotationXrollMatrix(angleInRadians);
+		TransformMatrix3D I = createRotationXrollMatrix(-angleInRadians);
 		M.setInverseMatrix(I);
 		I.setInverseMatrix(M);
 		return M;
 	}
 
-	private static TransformMatrix createRotationXrollMatrix(double angleInRadians) {
+	private static TransformMatrix3D createRotationXrollMatrix(double angleInRadians) {
 		double c = Math.cos(angleInRadians);
 		double s = Math.sin(angleInRadians);
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 1.0);
 		builder.setValue(1, 1, c);
 		builder.setValue(1, 2, -s);
@@ -88,18 +88,18 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getRotationYrollMatrix(double angleInRadians) {
-		TransformMatrix M = createRotationYrollMatrix(angleInRadians);
-		TransformMatrix I = createRotationYrollMatrix(-angleInRadians);
+	public static TransformMatrix3D getRotationYrollMatrix(double angleInRadians) {
+		TransformMatrix3D M = createRotationYrollMatrix(angleInRadians);
+		TransformMatrix3D I = createRotationYrollMatrix(-angleInRadians);
 		M.setInverseMatrix(I);
 		I.setInverseMatrix(M);
 		return M;
 	}
 
-	private static TransformMatrix createRotationYrollMatrix(double angleInRadians) {
+	private static TransformMatrix3D createRotationYrollMatrix(double angleInRadians) {
 		double c = Math.cos(angleInRadians);
 		double s = Math.sin(angleInRadians);
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, c);
 		builder.setValue(0, 2, s);
 		builder.setValue(1, 1, 1.0);
@@ -109,18 +109,18 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getRotationZrollMatrix(double angleInRadians) {
-		TransformMatrix M = createRotationZrollMatrix(angleInRadians);
-		TransformMatrix I = createRotationZrollMatrix(-angleInRadians);
+	public static TransformMatrix3D getRotationZrollMatrix(double angleInRadians) {
+		TransformMatrix3D M = createRotationZrollMatrix(angleInRadians);
+		TransformMatrix3D I = createRotationZrollMatrix(-angleInRadians);
 		M.setInverseMatrix(I);
 		I.setInverseMatrix(M);
 		return M;
 	}
 
-	private static TransformMatrix createRotationZrollMatrix(double angleInRadians) {
+	private static TransformMatrix3D createRotationZrollMatrix(double angleInRadians) {
 		double c = Math.cos(angleInRadians);
 		double s = Math.sin(angleInRadians);
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, c);
 		builder.setValue(0, 1, -s);
 		builder.setValue(1, 0, s);
@@ -130,7 +130,7 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getOrthographicProjectionMatrix(OrthographicProjection projection) {
+	public static TransformMatrix3D getOrthographicProjectionMatrix(OrthographicProjection projection) {
 		if (OrthographicProjection.ONTO_XY_PLANE.equals(projection)) {
 			return getOrthographicProjectionOntoXYplaneMatrix();
 		} else if (OrthographicProjection.ONTO_XZ_PLANE.equals(projection)) {
@@ -141,33 +141,33 @@ public class Transformation {
 		return null;
 	}
 
-	public static TransformMatrix getOrthographicProjectionOntoXYplaneMatrix() {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	public static TransformMatrix3D getOrthographicProjectionOntoXYplaneMatrix() {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 1.0);
 		builder.setValue(1, 1, 1.0);
 		builder.setValue(3, 3, 1.0);
 		return builder.build();
 	}
 
-	public static TransformMatrix getOrthographicProjectionOntoXZplaneMatrix() {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	public static TransformMatrix3D getOrthographicProjectionOntoXZplaneMatrix() {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 1.0);
 		builder.setValue(2, 2, 1.0);
 		builder.setValue(3, 3, 1.0);
 		return builder.build();
 	}
 
-	public static TransformMatrix getOrthographicProjectionOntoYZplaneMatrix() {
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+	public static TransformMatrix3D getOrthographicProjectionOntoYZplaneMatrix() {
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(1, 1, 1.0);
 		builder.setValue(2, 2, 1.0);
 		builder.setValue(3, 3, 1.0);
 		return builder.build();
 	}
 
-	public static TransformMatrix getCameraViewingMatrix(Point3D eye, Vector3D uUnit, Vector3D vUnit, Vector3D nUnit) {
+	public static TransformMatrix3D getCameraViewingMatrix(Point3D eye, Vector3D uUnit, Vector3D vUnit, Vector3D nUnit) {
 		Vector3D e = eye.minus(Point3D.origin());
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, uUnit.getX());
 		builder.setValue(0, 1, uUnit.getY());
 		builder.setValue(0, 2, uUnit.getZ());
@@ -184,13 +184,13 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getPerspectiveProjectionMatrix(double viewAngleInRadians, double aspectRatio,
+	public static TransformMatrix3D getPerspectiveProjectionMatrix(double viewAngleInRadians, double aspectRatio,
 			double N, double F) {
 		double top = N * Math.tan(viewAngleInRadians / 2);
 		double bottom = -top;
 		double right = top * aspectRatio;
 		double left = -right;
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		builder.setValue(0, 0, 2 * N / (right - left));
 		builder.setValue(0, 2, (right + left) / (right - left));
 		builder.setValue(1, 1, 2 * N / (top - bottom));
@@ -201,8 +201,8 @@ public class Transformation {
 		return builder.build();
 	}
 
-	public static TransformMatrix getInverseMatrix(TransformMatrix matrix) throws MatrixInversionException {
-		TransformMatrix inverse = matrix.getInverseMatrix();
+	public static TransformMatrix3D getInverseMatrix(TransformMatrix3D matrix) throws MatrixInversionException {
+		TransformMatrix3D inverse = matrix.getInverseMatrix();
 		if (inverse == null) {
 			inverse = createInverseMatrix(matrix);
 			inverse.setInverseMatrix(matrix); // wiring for future reuse
@@ -211,13 +211,13 @@ public class Transformation {
 		return inverse;
 	}
 
-	private static TransformMatrix createInverseMatrix(TransformMatrix matrix) throws MatrixInversionException {
+	private static TransformMatrix3D createInverseMatrix(TransformMatrix3D matrix) throws MatrixInversionException {
 		Metrics3D.getInstance().incrementMatrixInversions();
 		double det = computeDeterminant(matrix);
 		if (det == 0)
 			throw new MatrixInversionException();
 		double[] T = matrix.getValues();
-		TransformMatrixBuilder builder = new TransformMatrixBuilder();
+		TransformMatrixBuilder3D builder = new TransformMatrixBuilder3D();
 		if (matrix.isAffine()) {
 			builder.setValue(0, 0, (T[5] * T[10] - T[6] * T[9]) / det);
 			builder.setValue(0, 1, (T[2] * T[9] - T[1] * T[10]) / det);
@@ -273,7 +273,7 @@ public class Transformation {
 		return builder.build();
 	}
 
-	private static double computeDeterminant(TransformMatrix matrix) {
+	private static double computeDeterminant(TransformMatrix3D matrix) {
 		double[] T = matrix.getValues();
 		if (matrix.isAffine()) {
 			return -T[2] * T[5] * T[8] + T[1] * T[6] * T[8] + T[2] * T[4] * T[9] - T[0] * T[6] * T[9]

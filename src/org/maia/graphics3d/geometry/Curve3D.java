@@ -1,6 +1,6 @@
 package org.maia.graphics3d.geometry;
 
-import org.maia.graphics3d.transform.TransformMatrix;
+import org.maia.graphics3d.transform.TransformMatrix3D;
 
 public interface Curve3D {
 
@@ -22,6 +22,6 @@ public interface Curve3D {
 	 * @throws UnsupportedOperationException
 	 *             If this curve does not support transformations
 	 */
-	Curve3D transform(TransformMatrix matrix);
+	Curve3D transform(TransformMatrix3D matrix);
 
 }

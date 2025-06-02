@@ -15,16 +15,16 @@ import org.maia.graphics3d.model.scene.Scene;
 import org.maia.graphics3d.render.RenderOptions;
 import org.maia.graphics3d.render.ReusableObjectPack;
 import org.maia.graphics3d.render.shading.FlatShadingModel;
-import org.maia.graphics3d.transform.TransformMatrix;
-import org.maia.graphics3d.transform.Transformation;
-import org.maia.graphics3d.transform.TwoWayCompositeTransform;
+import org.maia.graphics3d.transform.TransformMatrix3D;
+import org.maia.graphics3d.transform.Transformation3D;
+import org.maia.graphics3d.transform.TwoWayCompositeTransform3D;
 import org.maia.util.ColorUtils;
 
 public class SimpleTexturedFace3D extends SimpleFace3D {
 
-	private TransformMatrix objectToPictureTransformMatrix;
+	private TransformMatrix3D objectToPictureTransformMatrix;
 
-	private TransformMatrix pictureToObjectTransformMatrix;
+	private TransformMatrix3D pictureToObjectTransformMatrix;
 
 	private TextureMapHandle pictureMapHandle;
 
@@ -92,10 +92,10 @@ public class SimpleTexturedFace3D extends SimpleFace3D {
 		return vertices;
 	}
 
-	private static TransformMatrix createObjectToPictureTransformMatrix(int pictureWidth, int pictureHeight) {
-		TwoWayCompositeTransform ct = new TwoWayCompositeTransform();
-		ct.then(Transformation.getScalingMatrix(2.0 / pictureWidth, 1.0, 2.0 / pictureHeight));
-		ct.then(Transformation.getTranslationMatrix(-1.0, 0, -1.0));
+	private static TransformMatrix3D createObjectToPictureTransformMatrix(int pictureWidth, int pictureHeight) {
+		TwoWayCompositeTransform3D ct = new TwoWayCompositeTransform3D();
+		ct.then(Transformation3D.getScalingMatrix(2.0 / pictureWidth, 1.0, 2.0 / pictureHeight));
+		ct.then(Transformation3D.getTranslationMatrix(-1.0, 0, -1.0));
 		return ct.getReverseCompositeMatrix();
 	}
 
@@ -219,11 +219,11 @@ public class SimpleTexturedFace3D extends SimpleFace3D {
 				: TextureMapRegistry.getInstance().getTextureMap(getTransparencyMapHandle());
 	}
 
-	private TransformMatrix getObjectToPictureTransformMatrix() {
+	private TransformMatrix3D getObjectToPictureTransformMatrix() {
 		return objectToPictureTransformMatrix;
 	}
 
-	protected TransformMatrix getPictureToObjectTransformMatrix() {
+	protected TransformMatrix3D getPictureToObjectTransformMatrix() {
 		return pictureToObjectTransformMatrix;
 	}
 
@@ -261,23 +261,23 @@ public class SimpleTexturedFace3D extends SimpleFace3D {
 			super(x1, x2, y1, y2);
 		}
 
-		public TransformMatrix createObjectToPictureTransformMatrix() {
+		public TransformMatrix3D createObjectToPictureTransformMatrix() {
 			return createPictureToObjectTransform().getReverseCompositeMatrix();
 		}
 
-		public TransformMatrix createPictureToObjectTransformMatrix() {
+		public TransformMatrix3D createPictureToObjectTransformMatrix() {
 			return createPictureToObjectTransform().getForwardCompositeMatrix();
 		}
 
-		private TwoWayCompositeTransform createPictureToObjectTransform() {
-			TwoWayCompositeTransform ct = new TwoWayCompositeTransform();
+		private TwoWayCompositeTransform3D createPictureToObjectTransform() {
+			TwoWayCompositeTransform3D ct = new TwoWayCompositeTransform3D();
 			// picture in XZ-plane (iso XY)
 			double x1 = getX1();
 			double x2 = getX2();
 			double z1 = getY1();
 			double z2 = getY2();
-			ct.then(Transformation.getTranslationMatrix(-(x1 + x2) / 2.0, 0, -(z1 + z2) / 2.0));
-			ct.then(Transformation.getScalingMatrix(2.0 / (x2 - x1), 1.0, 2.0 / (z2 - z1)));
+			ct.then(Transformation3D.getTranslationMatrix(-(x1 + x2) / 2.0, 0, -(z1 + z2) / 2.0));
+			ct.then(Transformation3D.getScalingMatrix(2.0 / (x2 - x1), 1.0, 2.0 / (z2 - z1)));
 			return ct;
 		}
 

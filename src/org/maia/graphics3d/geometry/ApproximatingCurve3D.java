@@ -3,7 +3,7 @@ package org.maia.graphics3d.geometry;
 import java.util.List;
 import java.util.Vector;
 
-import org.maia.graphics3d.transform.TransformMatrix;
+import org.maia.graphics3d.transform.TransformMatrix3D;
 
 /**
  * A curve in 3D that approximates (approaches, not necessarily interpolates) a sequence of control points
@@ -38,7 +38,7 @@ import org.maia.graphics3d.transform.TransformMatrix;
  * </p>
  * <p>
  * This family of curves supports <em>affine transformations</em> (unlike perspective projections) through the
- * <code>{@link #transform(TransformMatrix) transform}</code> method
+ * <code>{@link #transform(TransformMatrix3D) transform}</code> method
  * </p>
  * <h4>Note on computational efficiency</h4>
  * <p>
@@ -92,7 +92,7 @@ public class ApproximatingCurve3D implements Curve3D, Cloneable {
 	}
 
 	@Override
-	public Curve3D transform(TransformMatrix matrix) {
+	public Curve3D transform(TransformMatrix3D matrix) {
 		if (!matrix.isAffine())
 			throw new UnsupportedOperationException("This curve only supports affine transformations");
 		ApproximatingCurve3D tCurve = clone();

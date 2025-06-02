@@ -6,8 +6,8 @@ import org.maia.graphics3d.geometry.Box3D;
 import org.maia.graphics3d.geometry.Point3D;
 import org.maia.graphics3d.model.camera.Camera;
 import org.maia.graphics3d.model.object.Mesh3D.Edge;
-import org.maia.graphics3d.transform.TransformMatrix;
-import org.maia.graphics3d.transform.Transformation;
+import org.maia.graphics3d.transform.TransformMatrix3D;
+import org.maia.graphics3d.transform.Transformation3D;
 
 public abstract class VertexObject3D extends BaseObject3D implements MeshObject3D {
 
@@ -151,7 +151,7 @@ public abstract class VertexObject3D extends BaseObject3D implements MeshObject3
 	}
 
 	private List<Point3D> deriveVerticesInViewVolumeCoordinates(Camera camera) {
-		TransformMatrix projectionMatrix = camera.getViewVolume().getProjectionMatrix();
+		TransformMatrix3D projectionMatrix = camera.getViewVolume().getProjectionMatrix();
 		List<Point3D> projectedVertices = projectionMatrix.transform(getVerticesInCameraCoordinates(camera));
 		if (camera.getViewVolume().isPerspectiveProjection()) {
 			applyPerspectiveDivision(projectedVertices);
@@ -174,7 +174,7 @@ public abstract class VertexObject3D extends BaseObject3D implements MeshObject3
 	}
 
 	protected Point3D fromCameraToWorldCoordinates(Point3D point, Camera camera) {
-		return Transformation.getInverseMatrix(camera.getViewingMatrix()).transform(point);
+		return Transformation3D.getInverseMatrix(camera.getViewingMatrix()).transform(point);
 	}
 
 	protected Point3D fromWorldToObjectCoordinates(Point3D point) {

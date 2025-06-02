@@ -8,15 +8,15 @@ import org.maia.graphics3d.geometry.Point3D;
 /**
  * Represents a sequence of transformations, intended for "forward" application
  * 
- * @see ReverseCompositeTransform
+ * @see ReverseCompositeTransform3D
  */
-public class CompositeTransform {
+public class CompositeTransform3D {
 
 	/**
 	 * The individual transformation matrices in the sequence. The order corresponds to the order in which the
 	 * transformations are to be applied.
 	 */
-	private List<TransformMatrix> matrices = new Vector<TransformMatrix>();
+	private List<TransformMatrix3D> matrices = new Vector<TransformMatrix3D>();
 
 	/**
 	 * The combined result of applying all the transformation matrices in the subsequence.
@@ -25,19 +25,19 @@ public class CompositeTransform {
 	 * <code>C[i] = M[i] * C[i-1] = M[i] * M[i-1] * C[i-2] = ... = M[i] * M[i-1] * M[i-2] * ... * M[0]</code> , where
 	 * <code>C</code> denotes <code>compositeMatrices</code> and <code>M</code> denotes <code>matrices</code>
 	 */
-	private List<TransformMatrix> compositeMatrices = new Vector<TransformMatrix>();
+	private List<TransformMatrix3D> compositeMatrices = new Vector<TransformMatrix3D>();
 
-	public CompositeTransform() {
+	public CompositeTransform3D() {
 		reset(); // initialize with the Identity transform
 	}
 
-	public CompositeTransform then(TransformMatrix matrix) {
+	public CompositeTransform3D then(TransformMatrix3D matrix) {
 		getMatrices().add(matrix);
 		getCompositeMatrices().add(extendCompositeMatrix(getCompositeMatrix(), matrix));
 		return this;
 	}
 
-	public CompositeTransform undo() {
+	public CompositeTransform3D undo() {
 		int n = getMatrices().size();
 		if (n > 1) {
 			getMatrices().remove(n - 1);
@@ -49,7 +49,7 @@ public class CompositeTransform {
 		return this;
 	}
 
-	public CompositeTransform undoFrom(int stepIndex) {
+	public CompositeTransform3D undoFrom(int stepIndex) {
 		validateStepIndex(stepIndex);
 		int n = getMatrices().size() - stepIndex;
 		for (int i = 0; i < n; i++) {
@@ -58,25 +58,25 @@ public class CompositeTransform {
 		return this;
 	}
 
-	public CompositeTransform replace(int stepIndex, TransformMatrix matrix) {
+	public CompositeTransform3D replace(int stepIndex, TransformMatrix3D matrix) {
 		validateStepIndex(stepIndex);
 		if (stepIndex == getIndexOfCurrentStep()) {
 			return undo().then(matrix);
 		} else {
-			List<TransformMatrix> redo = new Vector<TransformMatrix>(getMatrices().subList(stepIndex + 1,
+			List<TransformMatrix3D> redo = new Vector<TransformMatrix3D>(getMatrices().subList(stepIndex + 1,
 					getMatrices().size()));
 			undoFrom(stepIndex).then(matrix);
-			for (TransformMatrix R : redo) {
+			for (TransformMatrix3D R : redo) {
 				then(R);
 			}
 			return this;
 		}
 	}
 
-	public CompositeTransform reset() {
+	public CompositeTransform3D reset() {
 		getMatrices().clear();
 		getCompositeMatrices().clear();
-		return then(Transformation.getIdentityMatrix());
+		return then(Transformation3D.getIdentityMatrix());
 	}
 
 	public int getIndexOfCurrentStep() {
@@ -93,24 +93,24 @@ public class CompositeTransform {
 		return getCompositeMatrix().transform(point);
 	}
 
-	public TransformMatrix getCompositeMatrix() {
+	public TransformMatrix3D getCompositeMatrix() {
 		int n = getCompositeMatrices().size();
 		if (n == 0) {
-			return Transformation.getIdentityMatrix();
+			return Transformation3D.getIdentityMatrix();
 		} else {
 			return getCompositeMatrices().get(n - 1);
 		}
 	}
 
-	protected TransformMatrix extendCompositeMatrix(TransformMatrix composite, TransformMatrix matrix) {
+	protected TransformMatrix3D extendCompositeMatrix(TransformMatrix3D composite, TransformMatrix3D matrix) {
 		return matrix.preMultiply(composite);
 	}
 
-	public List<TransformMatrix> getMatrices() {
+	public List<TransformMatrix3D> getMatrices() {
 		return matrices;
 	}
 
-	private List<TransformMatrix> getCompositeMatrices() {
+	private List<TransformMatrix3D> getCompositeMatrices() {
 		return compositeMatrices;
 	}
 

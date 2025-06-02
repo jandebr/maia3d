@@ -1,7 +1,7 @@
 package org.maia.graphics3d.model.camera;
 
-import org.maia.graphics3d.transform.TransformMatrix;
-import org.maia.graphics3d.transform.Transformation;
+import org.maia.graphics3d.transform.TransformMatrix3D;
+import org.maia.graphics3d.transform.Transformation3D;
 import org.maia.graphics3d.geometry.Point3D;
 import org.maia.graphics3d.geometry.Vector3D;
 
@@ -13,7 +13,7 @@ public class MovableCameraImpl extends BaseCamera implements MovableCamera {
 
 	private Vector3D n;
 
-	private TransformMatrix viewingMatrix;
+	private TransformMatrix3D viewingMatrix;
 
 	public MovableCameraImpl(ViewVolume viewVolume) {
 		this(Point3D.origin(), new Point3D(0, 0, -1.0), viewVolume);
@@ -119,16 +119,16 @@ public class MovableCameraImpl extends BaseCamera implements MovableCamera {
 		getU().makeUnitVector();
 		getV().makeUnitVector();
 		getN().makeUnitVector();
-		setViewingMatrix(Transformation.getCameraViewingMatrix(getPosition(), getU(), getV(), getN()));
+		setViewingMatrix(Transformation3D.getCameraViewingMatrix(getPosition(), getU(), getV(), getN()));
 		fireCameraHasChanged();
 	}
 
 	@Override
-	public TransformMatrix getViewingMatrix() {
+	public TransformMatrix3D getViewingMatrix() {
 		return viewingMatrix;
 	}
 
-	private void setViewingMatrix(TransformMatrix viewingMatrix) {
+	private void setViewingMatrix(TransformMatrix3D viewingMatrix) {
 		this.viewingMatrix = viewingMatrix;
 	}
 

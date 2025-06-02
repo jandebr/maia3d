@@ -1,7 +1,7 @@
 package org.maia.graphics3d.model.camera;
 
-import org.maia.graphics3d.transform.CompositeTransform;
-import org.maia.graphics3d.transform.Transformation;
+import org.maia.graphics3d.transform.CompositeTransform3D;
+import org.maia.graphics3d.transform.Transformation3D;
 import org.maia.graphics3d.geometry.Point3D;
 import org.maia.graphics3d.geometry.Vector3D;
 
@@ -89,11 +89,11 @@ public class RevolvingCameraImpl extends MovableCameraImpl implements RevolvingC
 	private RevolvingCamera updatePositionAndOrientation() {
 		double distance = getDistance();
 		Point3D pivot = getPivotPoint();
-		CompositeTransform ct = new CompositeTransform();
-		ct.then(Transformation.getRotationZrollMatrix(getLatitudeInRadians()));
-		ct.then(Transformation.getRotationYrollMatrix(-getLongitudeInRadians()));
-		ct.then(Transformation.getScalingMatrix(distance, distance, distance));
-		ct.then(Transformation.getTranslationMatrix(pivot.getX(), pivot.getY(), pivot.getZ()));
+		CompositeTransform3D ct = new CompositeTransform3D();
+		ct.then(Transformation3D.getRotationZrollMatrix(getLatitudeInRadians()));
+		ct.then(Transformation3D.getRotationYrollMatrix(-getLongitudeInRadians()));
+		ct.then(Transformation3D.getScalingMatrix(distance, distance, distance));
+		ct.then(Transformation3D.getTranslationMatrix(pivot.getX(), pivot.getY(), pivot.getZ()));
 		Point3D p0 = ct.transform(new Point3D(1.0, 0, 0));
 		Point3D p1 = ct.transform(new Point3D(1.0, 1.0, 0));
 		doPosition(p0, getPivotPoint(), p1.minus(p0));

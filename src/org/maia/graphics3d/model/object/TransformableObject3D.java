@@ -1,6 +1,6 @@
 package org.maia.graphics3d.model.object;
 
-import org.maia.graphics3d.transform.TransformMatrix;
+import org.maia.graphics3d.transform.TransformMatrix3D;
 import org.maia.graphics3d.geometry.Vector3D;
 
 public interface TransformableObject3D extends Object3D {
@@ -31,13 +31,13 @@ public interface TransformableObject3D extends Object3D {
 
 	TransformableObject3D rotateZ(double angleInRadians);
 
-	TransformableObject3D transform(TransformMatrix matrix);
+	TransformableObject3D transform(TransformMatrix3D matrix);
 
 	TransformableObject3D undoLastTransform();
 
 	TransformableObject3D undoTransformsFrom(int stepIndex);
 
-	TransformableObject3D replaceTransformAt(int stepIndex, TransformMatrix matrix);
+	TransformableObject3D replaceTransformAt(int stepIndex, TransformMatrix3D matrix);
 
 	TransformableObject3D resetTransforms();
 

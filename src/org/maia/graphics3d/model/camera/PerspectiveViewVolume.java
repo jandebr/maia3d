@@ -1,7 +1,7 @@
 package org.maia.graphics3d.model.camera;
 
-import org.maia.graphics3d.transform.TransformMatrix;
-import org.maia.graphics3d.transform.Transformation;
+import org.maia.graphics3d.transform.TransformMatrix3D;
+import org.maia.graphics3d.transform.Transformation3D;
 import org.maia.graphics2d.geometry.Radians;
 import org.maia.graphics2d.geometry.Rectangle2D;
 import org.maia.graphics3d.geometry.Box3D;
@@ -58,8 +58,8 @@ public class PerspectiveViewVolume implements ViewVolume {
 	}
 
 	@Override
-	public TransformMatrix getProjectionMatrix() {
-		return Transformation.getPerspectiveProjectionMatrix(Radians.degreesToRadians(getViewAngleInDegrees()),
+	public TransformMatrix3D getProjectionMatrix() {
+		return Transformation3D.getPerspectiveProjectionMatrix(Radians.degreesToRadians(getViewAngleInDegrees()),
 				getAspectRatio(), getN(), getF());
 	}
 

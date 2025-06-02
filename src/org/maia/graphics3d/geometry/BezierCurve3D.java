@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.maia.graphics3d.transform.TransformMatrix;
+import org.maia.graphics3d.transform.TransformMatrix3D;
 
 /**
  * Standard Bézier curve defined by a sequence of two or more control points
  * 
  * <p>
  * This implementation supports <em>affine transformations</em> (unlike perspective projections) through the
- * <code>{@link #transform(TransformMatrix) transform}</code> method
+ * <code>{@link #transform(TransformMatrix3D) transform}</code> method
  * </p>
  * 
  * <h4>Note on computational efficiency</h4>
@@ -56,7 +56,7 @@ public class BezierCurve3D implements Curve3D {
 	}
 
 	@Override
-	public Curve3D transform(TransformMatrix matrix) {
+	public Curve3D transform(TransformMatrix3D matrix) {
 		if (!matrix.isAffine())
 			throw new UnsupportedOperationException("This curve only supports affine transformations");
 		return new BezierCurve3D(matrix.transform(getControlPoints()));

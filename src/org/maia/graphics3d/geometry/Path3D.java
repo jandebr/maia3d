@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import org.maia.graphics3d.transform.Transformation;
+import org.maia.graphics3d.transform.Transformation3D;
 import org.maia.graphics2d.geometry.Point2D;
 
 public class Path3D {
@@ -82,8 +82,8 @@ public class Path3D {
 		PointAlongPath pp = interpolate(relativeDistance);
 		Point2D d = distribution.sample(pp);
 		Point3D q = new Point3D(0, d.getY(), -d.getX());
-		q = Transformation.getRotationZrollMatrix(pp.getDirection().getLatitudeInRadians()).transform(q);
-		q = Transformation.getRotationYrollMatrix(pp.getDirection().getAzimuthInRadians()).transform(q);
+		q = Transformation3D.getRotationZrollMatrix(pp.getDirection().getLatitudeInRadians()).transform(q);
+		q = Transformation3D.getRotationYrollMatrix(pp.getDirection().getAzimuthInRadians()).transform(q);
 		q = q.plus(pp.getPositionOnPath().minus(Point3D.origin()));
 		return new PointAroundPath(q, pp);
 	}

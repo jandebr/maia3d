@@ -13,16 +13,16 @@ import org.maia.graphics3d.model.camera.Camera;
 import org.maia.graphics3d.model.scene.Scene;
 import org.maia.graphics3d.render.RenderOptions;
 import org.maia.graphics3d.render.ReusableObjectPack;
-import org.maia.graphics3d.transform.TransformMatrix;
-import org.maia.graphics3d.transform.Transformation;
-import org.maia.graphics3d.transform.TwoWayCompositeTransform;
+import org.maia.graphics3d.transform.TransformMatrix3D;
+import org.maia.graphics3d.transform.Transformation3D;
+import org.maia.graphics3d.transform.TwoWayCompositeTransform3D;
 
 public abstract class BaseObject3D
 		implements BoundedObject3D, ComposableObject3D, TransformableObject3D, RaytraceableObject3D {
 
-	private TwoWayCompositeTransform ownCompositeTransform; // own transform
+	private TwoWayCompositeTransform3D ownCompositeTransform; // own transform
 
-	private TwoWayCompositeTransform selfToRootCompositeTransform; // cached transform from self to top-level composite
+	private TwoWayCompositeTransform3D selfToRootCompositeTransform; // cached transform from self to top-level composite
 
 	private CompositeObject3D<BaseObject3D> compositeObject; // parent object, if any
 
@@ -35,7 +35,7 @@ public abstract class BaseObject3D
 	private Box3D boundingBoxInViewVolumeCoordinates; // cached bounding box
 
 	protected BaseObject3D() {
-		this.ownCompositeTransform = new TwoWayCompositeTransform();
+		this.ownCompositeTransform = new TwoWayCompositeTransform3D();
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public abstract class BaseObject3D
 
 	@Override
 	public BaseObject3D translate(double dx, double dy, double dz) {
-		return transform(Transformation.getTranslationMatrix(dx, dy, dz));
+		return transform(Transformation3D.getTranslationMatrix(dx, dy, dz));
 	}
 
 	@Override
@@ -139,26 +139,26 @@ public abstract class BaseObject3D
 
 	@Override
 	public BaseObject3D scale(double sx, double sy, double sz) {
-		return transform(Transformation.getScalingMatrix(sx, sy, sz));
+		return transform(Transformation3D.getScalingMatrix(sx, sy, sz));
 	}
 
 	@Override
 	public BaseObject3D rotateX(double angleInRadians) {
-		return transform(Transformation.getRotationXrollMatrix(angleInRadians));
+		return transform(Transformation3D.getRotationXrollMatrix(angleInRadians));
 	}
 
 	@Override
 	public BaseObject3D rotateY(double angleInRadians) {
-		return transform(Transformation.getRotationYrollMatrix(angleInRadians));
+		return transform(Transformation3D.getRotationYrollMatrix(angleInRadians));
 	}
 
 	@Override
 	public BaseObject3D rotateZ(double angleInRadians) {
-		return transform(Transformation.getRotationZrollMatrix(angleInRadians));
+		return transform(Transformation3D.getRotationZrollMatrix(angleInRadians));
 	}
 
 	@Override
-	public BaseObject3D transform(TransformMatrix matrix) {
+	public BaseObject3D transform(TransformMatrix3D matrix) {
 		getOwnCompositeTransform().then(matrix);
 		notifySelfHasTransformed();
 		return this;
@@ -179,7 +179,7 @@ public abstract class BaseObject3D
 	}
 
 	@Override
-	public TransformableObject3D replaceTransformAt(int stepIndex, TransformMatrix matrix) {
+	public TransformableObject3D replaceTransformAt(int stepIndex, TransformMatrix3D matrix) {
 		getOwnCompositeTransform().replace(stepIndex, matrix);
 		notifySelfHasTransformed();
 		return this;
@@ -197,23 +197,23 @@ public abstract class BaseObject3D
 		return getOwnCompositeTransform().getIndexOfCurrentStep();
 	}
 
-	protected TwoWayCompositeTransform getOwnCompositeTransform() {
+	protected TwoWayCompositeTransform3D getOwnCompositeTransform() {
 		return ownCompositeTransform;
 	}
 
-	protected TwoWayCompositeTransform getSelfToRootCompositeTransform() {
+	protected TwoWayCompositeTransform3D getSelfToRootCompositeTransform() {
 		if (selfToRootCompositeTransform == null) {
 			selfToRootCompositeTransform = deriveSelfToRootCompositeTransform();
 		}
 		return selfToRootCompositeTransform;
 	}
 
-	private TwoWayCompositeTransform deriveSelfToRootCompositeTransform() {
+	private TwoWayCompositeTransform3D deriveSelfToRootCompositeTransform() {
 		List<BaseObject3D> ancestors = getAncestors();
 		if (ancestors.isEmpty()) {
 			return getOwnCompositeTransform();
 		} else {
-			TwoWayCompositeTransform ct = new TwoWayCompositeTransform();
+			TwoWayCompositeTransform3D ct = new TwoWayCompositeTransform3D();
 			ct.then(getOwnCompositeTransform().getForwardCompositeMatrix());
 			for (BaseObject3D ancestor : ancestors) {
 				ct.then(ancestor.getOwnCompositeTransform().getForwardCompositeMatrix());

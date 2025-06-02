@@ -13,51 +13,51 @@ import org.maia.graphics3d.geometry.Point3D;
  * transformations and their inverses, respectively.
  * </p>
  * 
- * @see CompositeTransform
- * @see ReverseCompositeTransform
+ * @see CompositeTransform3D
+ * @see ReverseCompositeTransform3D
  */
-public class TwoWayCompositeTransform {
+public class TwoWayCompositeTransform3D {
 
-	private CompositeTransform forwardCompositeTransform;
+	private CompositeTransform3D forwardCompositeTransform;
 
-	private CompositeTransform reverseCompositeTransform;
+	private CompositeTransform3D reverseCompositeTransform;
 
-	public TwoWayCompositeTransform() {
-		this.forwardCompositeTransform = new CompositeTransform();
-		this.reverseCompositeTransform = new ReverseCompositeTransform();
+	public TwoWayCompositeTransform3D() {
+		this.forwardCompositeTransform = new CompositeTransform3D();
+		this.reverseCompositeTransform = new ReverseCompositeTransform3D();
 	}
 
-	public TwoWayCompositeTransform then(TransformMatrix matrix) {
+	public TwoWayCompositeTransform3D then(TransformMatrix3D matrix) {
 		getForwardCompositeTransform().then(matrix);
-		getReverseCompositeTransform().then(Transformation.getInverseMatrix(matrix));
+		getReverseCompositeTransform().then(Transformation3D.getInverseMatrix(matrix));
 		// Set the inverses of the both current composite matrices
 		getForwardCompositeMatrix().setInverseMatrix(getReverseCompositeMatrix());
 		getReverseCompositeMatrix().setInverseMatrix(getForwardCompositeMatrix());
 		return this;
 	}
 
-	public TwoWayCompositeTransform undo() {
+	public TwoWayCompositeTransform3D undo() {
 		getForwardCompositeTransform().undo();
 		getReverseCompositeTransform().undo();
 		return this;
 	}
 
-	public TwoWayCompositeTransform undoFrom(int stepIndex) {
+	public TwoWayCompositeTransform3D undoFrom(int stepIndex) {
 		getForwardCompositeTransform().undoFrom(stepIndex);
 		getReverseCompositeTransform().undoFrom(stepIndex);
 		return this;
 	}
 
-	public TwoWayCompositeTransform replace(int stepIndex, TransformMatrix matrix) {
+	public TwoWayCompositeTransform3D replace(int stepIndex, TransformMatrix3D matrix) {
 		getForwardCompositeTransform().replace(stepIndex, matrix);
-		getReverseCompositeTransform().replace(stepIndex, Transformation.getInverseMatrix(matrix));
+		getReverseCompositeTransform().replace(stepIndex, Transformation3D.getInverseMatrix(matrix));
 		// Set the inverses of the both current composite matrices
 		getForwardCompositeMatrix().setInverseMatrix(getReverseCompositeMatrix());
 		getReverseCompositeMatrix().setInverseMatrix(getForwardCompositeMatrix());
 		return this;
 	}
 
-	public TwoWayCompositeTransform reset() {
+	public TwoWayCompositeTransform3D reset() {
 		getForwardCompositeTransform().reset();
 		getReverseCompositeTransform().reset();
 		return this;
@@ -83,19 +83,19 @@ public class TwoWayCompositeTransform {
 		return getReverseCompositeMatrix().transform(points);
 	}
 
-	public TransformMatrix getForwardCompositeMatrix() {
+	public TransformMatrix3D getForwardCompositeMatrix() {
 		return getForwardCompositeTransform().getCompositeMatrix();
 	}
 
-	public TransformMatrix getReverseCompositeMatrix() {
+	public TransformMatrix3D getReverseCompositeMatrix() {
 		return getReverseCompositeTransform().getCompositeMatrix();
 	}
 
-	private CompositeTransform getForwardCompositeTransform() {
+	private CompositeTransform3D getForwardCompositeTransform() {
 		return forwardCompositeTransform;
 	}
 
-	private CompositeTransform getReverseCompositeTransform() {
+	private CompositeTransform3D getReverseCompositeTransform() {
 		return reverseCompositeTransform;
 	}
 
