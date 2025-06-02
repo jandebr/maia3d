@@ -15,8 +15,8 @@ import org.maia.graphics3d.geometry.Point3D;
  * 
  * <p>
  * Instances of this class are immutable. This allows composite transformation matrices to be computed and kept in
- * memory for efficient reuse. To create new or adjusted <code>TransformMatrix</code> instances, it is advised to use
- * <code>TransformMatrixBuilder</code>
+ * memory for efficient reuse. To create new or adjusted <code>TransformMatrix3D</code> instances, it is advised to use
+ * <code>TransformMatrixBuilder3D</code>
  * </p>
  * 
  * @see TransformMatrixBuilder3D

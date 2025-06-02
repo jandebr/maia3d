@@ -8,8 +8,8 @@ import org.maia.graphics3d.geometry.Point3D;
  * Represents a sequence of transformations, supporting both "forward" and "reverse" application
  * 
  * <p>
- * Essentially brings together one <code>CompositeTransform</code> (for forward application) and one
- * <code>ReverseCompositeTransform</code> (for reverse application), referencing a sequence of individual
+ * Essentially brings together one <code>CompositeTransform3D</code> (for forward application) and one
+ * <code>ReverseCompositeTransform3D</code> (for reverse application), referencing a sequence of individual
  * transformations and their inverses, respectively.
  * </p>
  * 
