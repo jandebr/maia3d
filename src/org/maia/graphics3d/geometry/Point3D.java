@@ -75,15 +75,7 @@ public class Point3D {
 		if (getClass() != obj.getClass())
 			return false;
 		Point3D other = (Point3D) obj;
-		if (Double.doubleToLongBits(w) != Double.doubleToLongBits(other.w))
-			return false;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-			return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-			return false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-			return false;
-		return true;
+		return getX() == other.getX() && getY() == other.getY() && getZ() == other.getZ() && getW() == other.getW();
 	}
 
 	@Override
@@ -91,13 +83,13 @@ public class Point3D {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(w);
+		temp = Double.doubleToLongBits(getW());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(x);
+		temp = Double.doubleToLongBits(getX());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
+		temp = Double.doubleToLongBits(getY());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
+		temp = Double.doubleToLongBits(getZ());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
